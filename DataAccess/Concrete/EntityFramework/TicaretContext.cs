@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.EntityFramework
 	{
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(@"Server=WINDOWS-4H8TAO8\SQLEXPRESS; Database=Ticaret; Trusted_Connection=true");
+			optionsBuilder.UseSqlServer(@"Server=WINDOWS-4H8TAO8\SQLEXPRESS; Database=Ticaret; Trusted_Connection=true; TrustServerCertificate=True; ");
 		}
 
 		public DbSet<Product> Products { get; set; }
