@@ -1,5 +1,7 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,57 +12,27 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-	public class EfProductDal : IProductDal
+	public class EfProductDal : EfEntityRepositoryBase<Product, TicaretContext>, IProductDal
 	{
-		public void Add(Product entity)
+		public List<ProductDetailDto> GetProductDetails()
 		{
 			using (TicaretContext context = new TicaretContext())
 			{
-				var addedEntity = context.Entry(entity);
-				addedEntity.State = EntityState.Added;
-				context.SaveChanges();
-			}
+				var result = from p in context.Products
+							 join c in context.Categories
+							 on p.CategoryId equals c.CategoryId
+							 select new ProductDetailDto
+							 {
+								 ProductId = p.ProductId,
+								 ProductName = p.ProductName,
+								 CategoryName = c.CategoryName,
+								 UnitPrice = p.UnitPrice,
 
-		}
 
-		public void Delete(Product entity)
-		{
-			using (TicaretContext context = new TicaretContext())
-			{
-				var deletedEntity = context.Entry(entity);
-				deletedEntity.State = EntityState.Deleted;
-				context.SaveChanges();
-			}
+							 };
+				return result.ToList();
 
-		}
 
-		public Product Get(Expression<Func<Product, bool>> filter = null)
-		{
-			using (TicaretContext context = new TicaretContext())
-			{
-				return context.Set<Product>().SingleOrDefault(filter);
-
-			}
-		}
-
-		public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
-		{
-
-			using (TicaretContext context = new TicaretContext())
-			{
-				return filter == null
-					? context.Set<Product>().ToList()
-					: context.Set<Product>().Where(filter).ToList();
-
-			}
-		}
-		public void Update(Product entity)
-		{
-			using (TicaretContext context = new TicaretContext())
-			{
-				var updatedEntity = context.Entry(entity);
-				updatedEntity.State = EntityState.Modified;
-				context.SaveChanges();
 			}
 
 		}
