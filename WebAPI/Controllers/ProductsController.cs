@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 
 namespace WebAPI.Controllers
 {
@@ -16,22 +17,51 @@ namespace WebAPI.Controllers
 		{
 			_productService = productService;
 		}
-		[HttpGet]
-		public List<Product> Get()
+		[HttpGet("getall")]
+		public IActionResult Get()
 		{
-
 			var result = _productService.GetAll();
-			return result.Data;
-			
+			if (result.Success)
+			{
+				return Ok(result);
+
+			}
+			else
+			{
+				return BadRequest(result);
+			}
+		}
+		[HttpGet("Getbyid")]
+		public IActionResult GetById(int id) 
+		{
+			var result = _productService.GetById(id);
+			if (result.Success)
+			{
+				return Ok(result);
+			}
+			else
+			{
+				return BadRequest(result);
+			}
+
+		}
+
+		[HttpPost("add")]
+		public IActionResult Add(Product product)
+		{
+			var result = _productService.Add(product);
+			if (result.Success)
+			{
+				return Ok(result);
+			}
+			else
+			{
+				return BadRequest(result);
+			}
 		}
 
 
-		//[HttpPost]
-		//public List<Product> Post()
-		//{
 
-		//	return new IProductService;
-		//}
 
 
 	}

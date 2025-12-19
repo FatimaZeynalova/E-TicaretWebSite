@@ -34,7 +34,7 @@ namespace Business.Concrete
 		{
 			//if (DateTime.Now.Hour == 22)
 			//{
-			//	return new ErrorDataResult<List<Product>>(Massages.MaintenanceTime);
+				//return new ErrorDataResult<List<Product>>(Massages.MaintenanceTime);
 			//}
 			return new SuccessDataResult<List<Product>>(_productDal.GetAll(), Massages.ProductsListed);
 
@@ -42,7 +42,7 @@ namespace Business.Concrete
 
 		public IDataResult<List<Product>> GetAllByCategoryId(int id)
 		{
-			
+
 			return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id));
 
 		}
@@ -54,7 +54,7 @@ namespace Business.Concrete
 
 		public IDataResult<List<Product>> GetByUnitProce(decimal min, decimal max)
 		{
-			return new SuccessDataResult < List < Product >> (_productDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max));
+			return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max));
 		}
 
 		public IDataResult<List<ProductDetailDto>> GetProductDetails()
