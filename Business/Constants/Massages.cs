@@ -16,6 +16,7 @@ namespace Business.Constants
 		public static string MaintenanceTime= "Sistem bakimda";
 		public static string ProductNameAlreadyExists = "Bu isimde zaten başka bir ürün var.";
 		public static string CategoryLimitExceded = "Kategori limiti aşıldı.";
+		public static string UnitPriceInvalid = "Ürün fiyatı geçersiz.";
 
 
 	}
